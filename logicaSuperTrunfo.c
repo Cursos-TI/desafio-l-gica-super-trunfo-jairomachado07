@@ -10,28 +10,12 @@ int main() {
     // Definição das variáveis para armazenar as propriedades das cidades
     //Todos os atributos foram feitos duplicados, com nomes parecidos apenas com o dois no final para diferenciar.
     //Adicionei uma variavel escolha para o switch case que será implementado futuramente.
-    //char estado[2], estado2[2];
-    //char codigo[4], codigo2[4];
-    //char nomecidade[20], nomecidade2[20];
+    
     int populacao, populacao2, npontosturisticos, npontosturisticos2, escolha;
     float area, area2, pbi, pbi2;
 
     // Cadastro das Cartas:
     // Entrada dos dados da primeira cidade (Carta 1)
-    /* printf("Digite o estado 1(letra): ");
-    scanf(" %c", &estado);
-    printf("Digite o codigo 1(3 digitos): ");
-    scanf("%3s", codigo);
-    printf("Digite o nome da cidade 1(ate 50 letras): ");
-    scanf("%19s", nomecidade);
-    printf("Digite a populacao da cidade 1: ");
-    scanf("%d", &populacao);
-    printf("Digite a area da cidade 1: ");
-    scanf("%f", &area);
-    printf("Digite o PBI: ");
-    scanf("%f", &pbi);
-    printf("Digite o numero de pontos turisticos (inteiro): ");
-    scanf("%d", &npontosturisticos);*/
 
     //Entrada dos dados da primeira cidade (Carta 1)
     char estado[] = "Ceará";
@@ -46,25 +30,10 @@ int main() {
     float densidade_populacional = populacao / area;
     float pbi_per_capita = pbi / populacao;
 
-    //Caulculando o SuperPower da carta 1
-    float superpower1 = (float)populacao + area + pbi + (float)npontosturisticos + (float)pbi_per_capita + (1-(float)densidade_populacional);
-
-    //Entrada dos dados da segunda cidade
-    /*printf("Digite o estado 2(letra): ");
-    scanf(" %c", &estado2);
-    printf("Digite o codigo 2(3 digitos): ");
-    scanf("%3s", codigo2);
-    printf("Digite o nome da cidade 2(ate 50 letras): ");
-    scanf("%19s", nomecidade2);
-    printf("Digite a populacao: ");
-    scanf("%d", &populacao2);
-    printf("Digite a area: ");
-    scanf("%f", &area2);
-    printf("Digite o PBI: ");
-    scanf("%f", &pbi2);
-    printf("Digite o numero de pontos turisticos (inteiro): ");
-    scanf("%d", &npontosturisticos2);*/
-
+    //Retirando o superpower da carta e adicionando a soma dos atributos para definir o vencedor
+    int soma_atributos1 = 0;
+    int soma_atributos2 = 0;
+    int empate_atributos = 0;
     //Entrada dos dados da segunda cidade
     char estado2[] = "Rio Grande do Norte";
     char codigo2[] = "B02";
@@ -77,9 +46,6 @@ int main() {
     //Criando os dados estatisticos adicionais da cidade 2(PIB per capita e Densidade populacional)
     float densidade_populacional2 = populacao2 / area2;
     float pbi_per_capita2 = pbi2 / populacao2;
-
-    //Caulculando o SuperPower da carta 2
-    float superpower2 = (float)populacao2 + area2 + pbi2 + (float)npontosturisticos2 + (float)pbi_per_capita2 +(1- (float)densidade_populacional2);
     
     //mostrando os dados d primeira carta    
     printf("Super Trunfo!\n");
@@ -94,6 +60,13 @@ int main() {
     printf(", nome da Cidade: %s\n", nomecidade2);
     printf("\n");
 
+    //Caulculando o SuperPower da carta 1 e 2
+
+    float superpower1 = (float)populacao + area + pbi + (float)npontosturisticos + (float)pbi_per_capita + (1-(float)densidade_populacional);
+
+    float superpower2 = (float)populacao2 + area2 + pbi2 + (float)npontosturisticos2 + (float)pbi_per_capita2 + (1-(float)densidade_populacional2);
+
+
     // Comparação de Cartas:
     // Implementando um switch case para cada atributo
 
@@ -105,7 +78,9 @@ int main() {
     printf("5 - PBI per capita\n");
     printf("6 - Mostrar dados de %s\n", nomecidade);
     printf("7 - Mostrar dados de %s\n", nomecidade2);
-    printf("Digite sua escolha (1-7): ");
+    printf("8 - Mostrar o vencedor por atributos\n");
+    printf("9 - Mostrar o vencedor pelo Superpower\n");
+    printf("Digite sua escolha (1-9): ");
     scanf("%d", &escolha);
 
     switch (escolha){
@@ -172,18 +147,83 @@ int main() {
         printf("Densidade Populacional: %.2f\n", densidade_populacional2);
         printf("PBI per capita: %.2f\n", pbi_per_capita2);
         break;
+    case 8: //Mostrando o vencedor por atributos
+        if(populacao > populacao2){
+            printf("A cidade de %s é a vencedora com a população de %d\n", nomecidade, populacao);
+            soma_atributos1++;
+        }else if(populacao == populacao2){
+            printf("As duas cidades empataram");
+            empate_atributos++;
+        }else{
+            printf("A cidade de %s é a vencedora com a população de %d\n", nomecidade2, populacao2);
+            soma_atributos2++;
+        }
+
+        if(area > area2){
+            printf("A cidade de %s é a vencedora com a area de %.2f\n", nomecidade, area);
+            soma_atributos1++;
+        }else if(area == area2){
+            printf("As duas cidades empataram");
+            empate_atributos++;
+        }else{
+            printf("A cidade de %s é a vencedora com a area de %.2f\n", nomecidade2, area2);
+            soma_atributos2++;
+        } 
+
+        if(npontosturisticos > npontosturisticos2){
+            printf("A cidade de %s é a vencedora com a quantidade de pontos turisticos de %d\n", nomecidade, npontosturisticos);
+            soma_atributos1++;
+        }else if(npontosturisticos == npontosturisticos2){
+            printf("As duas cidades empataram");
+            empate_atributos++;
+        }else{
+            printf("A cidade de %s é a vencedora com a quantidade de pontos turisticos de %d\n", nomecidade2, npontosturisticos2);
+            soma_atributos2++;
+        }
+
+        if(densidade_populacional < densidade_populacional2){
+            printf("A cidade de %s é a vencedora com a densidade populacional de %.2f\n", nomecidade, densidade_populacional);
+            soma_atributos1++;
+        }else if(densidade_populacional == densidade_populacional2){
+            printf("As duas cidades empatam");
+            empate_atributos++;
+        }else{
+            printf("A cidade de %s é a vencedora com a densidade populacional de %.2f\n", nomecidade2, densidade_populacional2);
+            soma_atributos2++;
+        }
+
+        if(pbi_per_capita > pbi_per_capita2){
+            printf("A cidade de %s é a vencedora com o pbi per capita de %.2f\n", nomecidade, pbi_per_capita);
+            soma_atributos1++;
+        }else if(pbi_per_capita == pbi_per_capita2){
+            printf("As duas cidades empataram");
+            empate_atributos++;
+        }else{                  
+            printf("A cidade de %s é a vencedora com o pbi per capita de %.2f\n", nomecidade2, pbi_per_capita2);
+            soma_atributos2++;
+        }
+        //Mostrando o vencedor por atributos
+        if(soma_atributos1 > soma_atributos2){
+            printf("A cidade vencedora é %s com %d atributos ganhos!\n", nomecidade, soma_atributos1);
+        }else if(soma_atributos1 == soma_atributos2){
+            printf("As duas cidades empataram com %d atributos ganhos cada!\n", soma_atributos1);
+        }else{
+            printf("A cidade vencedora é %s com %d atributos ganhos!\n", nomecidade2, soma_atributos2);
+        }
+        break;
+    case 9: //Criando o superpower utilizando operador ternário
+        if(superpower1 != superpower2){
+            superpower1 > superpower2 ? printf("A cidade de %s é a vencedora com o superpower de %.2f\n", nomecidade, superpower1) : printf("A cidade de %s é a vencedora com o superpower de %.2f\n", nomecidade2, superpower2);
+        }else{
+            printf("As duas cidades empataram com o superpower de %.2f\n", superpower1);
+        }
+        break;
+        
     default:
         printf("Escolha invalida!\n");
         break;
     }    
 
     printf("\n");
-
-    //O superpower define quem tem os maiores atributos, então quem tem o maior superpower é a cidade vencedora
-    if(superpower1 > superpower2){
-        printf("A cidade vencedora é: %s\n", nomecidade);
-    }else{
-        printf("A cidade vencedora é: %s\n", nomecidade2);
-    }
-    return 0;
+    
 }
